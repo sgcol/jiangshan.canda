@@ -48,7 +48,7 @@ export default {
 				allowScriptAccess: "always",
 				wmode:'direct'
 			};
-			embedSWF('./PreLoader.swf', 'game', '100%', '100%', '9.0.0', 'swf/playerProductInstall.swf', flashvars, params, {})
+			embedSWF('./PreLoader.swf', document.getElementById('game'), '100%', '100%', '9.0.0', 'swf/playerProductInstall.swf', flashvars, params, {})
 		}
 	},
 	created() {
