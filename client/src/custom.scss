@@ -1,0 +1,16 @@
+$primary : #ff9933;
+$border-color :#cccccc;
+$input-placeholder-color: #cccccc;
+$card-border-color :#ff9933 !default;
+
+$body-bg: transparent;
+
+@import '~bootstrap';
+
+.btn-radio {
+    @include button-variant($white, $border-color, darken($primary, 10%), lighten($primary,5%), $primary, lighten($primary,30%));
+    color:#666666;
+    min-width:80px;
+}
+
+@import '~bootstrap-vue';
