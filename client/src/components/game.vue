@@ -1,66 +1,130 @@
 <template>
-	<div id="game"></div>
+  <div id="game"></div>
 </template>
 
 <script>
 // eslint-disable-next-line
-import router from '../router'
-const {embedSWF}= require('../../swfobject/swfobject/src/swfobject');
+import router from "../router";
+import md5 from "md5";
 
-function  ELFHash(str)
-{
-		str+='';
-		var  hash  =   0 ;
-		var  x     =   0 ,i=0;
-		while  (i<str.length)
-		{
-				hash  =  (hash  <<   4 )  +  str.charCodeAt(i++);
-				hash=parseFloat(hash>>>0);
-				if  ((x  =  parseFloat((hash&0xF0000000)>>>0))  !=   0 )
-				{
-						hash  ^=  (x  >>>   24 );
-						hash  &=   ~ x;
-						hash=hash>>>0;
-				}
-		}
-		return  (hash  &   0x7FFFFFFF );
+const { embedSWF } = require("../../swfobject/swfobject/src/swfobject");
+
+function ELFHash(str) {
+  str += "";
+  var hash = 0;
+  var x = 0,
+    i = 0;
+  while (i < str.length) {
+    hash = (hash << 4) + str.charCodeAt(i++);
+    hash = parseFloat(hash >>> 0);
+    if ((x = parseFloat((hash & 0xf0000000) >>> 0)) != 0) {
+      hash ^= x >>> 24;
+      hash &= ~x;
+      hash = hash >>> 0;
+    }
+  }
+  return hash & 0x7fffffff;
 }
 
+// eslint-disable-line no-unused-vars
+function gopay() {
+  let routeData = router.resolve({ path: "/pay" });
+  window.open(routeData.href, "_blank");
+}
+
+window.gopay = gopay;
 export default {
-	name: 'Game',
-	components: {
-	},
-	data() {
-		return {
-		}
-	},
-	methods:{
-		launchGame(name) {
-			var flashvars={
-				param:encodeURIComponent({
-					account:name,
-					accid:ELFHash(name),
-					fcm:1,
-					pay_url:'javascript:router.push("/pay");'
-				})
-			},
-			params = {
-				allowScriptAccess: "always",
-				wmode:'direct'
-			};
-			embedSWF('./PreLoader.swf', document.getElementById('game'), '100%', '100%', '9.0.0', 'swf/playerProductInstall.swf', flashvars, params, {})
-		}
-	},
-	created() {
-		if (this.$route.params.name) this.launchGame(this.$route.params.name);
-		else router.push('/login');
-	}
-}
+  name: "Game",
+  components: {},
+  data() {
+    return {};
+  },
+  methods: {
+    launchGame(name) {
+      var param = "",
+        tarstr = "";
+
+      param += "nettype=" + 1;
+      tarstr += 1 + "_";
+
+      param += "&accid=" + ELFHash(name);
+      tarstr += ELFHash(name) + "_";
+
+      param += "&account=" + name;
+      tarstr += name + "_";
+
+      param += "&fcm=" + 1;
+      tarstr += 1 + "_";
+
+      param += "&game=" + 1;
+      tarstr += 1 + "_";
+
+      param += "&zone=" + 1;
+      tarstr += 1 + "_";
+
+      param += "&ip=" + "192.168.1.240";
+      tarstr += "192.168.1.240" + "_";
+
+      param += "&port=" + "7755";
+      tarstr += "7755" + "_";
+
+      param += "&pay_url=" + "javascript:gopay()";
+      // param += "&pay_url=" + "http://47.105.144.3:7777/#/pay";
+
+      param +=
+        "&vipType=0&vipLevel=0&vipParam0=0&vipParam1=0&vipParam2=0&vipParam3=0";
+      tarstr += "0_0_0_0_0_0_";
+
+      param += "&sign=" + md5(tarstr + "Q@ABc#d27poss");
+
+      param += "&ad" + 1;
+
+      console.log("dddd", name);
+
+      param += "&home_url=";
+      param += "&bbs_url=";
+
+      var flashvars = {},
+        attributes = {},
+        params = {}; // eslint-disable-line no-unused-vars
+      (flashvars = {
+        param: encodeURIComponent(param)
+      }),
+        (params = {
+          base: ".",
+          wmode: "direct"
+        }),
+        (attributes = { wmode: "direct" });
+
+      console.log(flashvars);
+      embedSWF(
+        `./Preloader.swf?` + Math.random(),
+        document.getElementById(`game`),
+        `100%`,
+        `100%`,
+        `11.8.0`,
+        `./playerProductInstall.swf`,
+        flashvars,
+        params,
+        attributes
+      );
+    }
+  },
+  created() {
+    setTimeout(() => {
+      if (this.$route.params.name) this.launchGame(this.$route.params.name);
+      else router.push("/login");
+    }, 1000);
+  }
+};
 </script>
+
 
 <style scoped>
 .game {
-	width:100%;
-	height:100%;
+  width: 100%;
+  height: 100%;
 }
 </style>
+
+
