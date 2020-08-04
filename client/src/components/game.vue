@@ -6,6 +6,8 @@
 // eslint-disable-next-line
 import router from "../router";
 import md5 from "md5";
+import {get} from "vue-xhr"
+import {serverpath} from '../etc'
 
 const { embedSWF } = require("../../swfobject/swfobject/src/swfobject");
 
@@ -26,13 +28,11 @@ function ELFHash(str) {
   return hash & 0x7fffffff;
 }
 
-// eslint-disable-line no-unused-vars
-function gopay() {
+window.gopay = ()=>{
   let routeData = router.resolve({ path: "/pay" });
   window.open(routeData.href, "_blank");
-}
+};
 
-window.gopay = gopay;
 export default {
   name: "Game",
   components: {},
@@ -40,7 +40,13 @@ export default {
     return {};
   },
   methods: {
-    launchGame(name) {
+    async launchGame(name) {
+			var srv_url=Object.assign({}, serverpath);
+			srv_url.query=null;
+			srv_url.search='';
+			srv_url.pathname=url.resolve(srv_url.pathname, 'gs');
+			var {data}=await get(url.format(srv_url));
+
       var param = "",
         tarstr = "";
 
@@ -62,11 +68,11 @@ export default {
       param += "&zone=" + 1;
       tarstr += 1 + "_";
 
-      param += "&ip=" + "192.168.1.240";
-      tarstr += "192.168.1.240" + "_";
+      param += "&ip=" + data.ip//"192.168.1.240";
+      tarstr += data.ip+'_'//"192.168.1.240" + "_";
 
-      param += "&port=" + "7755";
-      tarstr += "7755" + "_";
+      param += "&port=" + data.port//"7755";
+      tarstr += data.port+'_' //"7755" + "_";
 
       param += "&pay_url=" + "javascript:gopay()";
       // param += "&pay_url=" + "http://47.105.144.3:7777/#/pay";

@@ -11,6 +11,7 @@
     "httpf": "0.0.9",
     "md5": "^2.2.1",
     "randomstring": "^1.1.5",
+    "request": "^2.88.2",
     "yargs": "^15.4.1"
   },
   "devDependencies": {

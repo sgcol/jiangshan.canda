@@ -15,6 +15,7 @@ var server = require('http').createServer()
 	, rndstring=require('randomstring').generate
 	, argv=require('yargs')
 		.default('port', 7008)
+        .default('gameserver', ':7755')
 		.argv
 	, debugout =require('debugout')(argv.debugout)
 
