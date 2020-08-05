@@ -1,37 +1,63 @@
 <template>
+<div>
+	<b-modal id="qr" hide-footer>
+		<template v-slot:modal-title>
+			{{qr_method}}扫码
+		</template>
+		<div id="qrcode"></div>
+	</b-modal>
 	<div class="w-100 h-100 text-left">
 		<div class="h-100 p-3 m-3 bg-white">
 			<b-form class="h-100 border p-5">
 				<p>充值到《仙道传说》 角色名{{name}}</p>
-				<b-tabs class="mt-5" content-class="mt-4" v-model="tabIndex">
-					<b-tab title="扫码支付" :title-link-class="linkClass(0)" active>
-						<b-form-radio-group
-							id="btn-radios-1"
-							v-model="money"
-							:options="[10, 50, 100, 500, 1000, 5000]"
-							buttons
-							name="radios-btn-default"
-							button-variant="radio"
-							size="lg"
-						>
-							<b-form-radio value="custom">
-								<b-input-group>
-									<b-form-input size="sm" style="max-width:80px" placeholder="其他金额" v-model="amount"></b-form-input>
-									<b-input-group-append>
-									元
-									</b-input-group-append>
-								</b-input-group>
-							</b-form-radio>
-						</b-form-radio-group>
-					</b-tab>
-					<b-tab title="网银支付" :title-link-class="linkClass(1)"><p>test 2</p></b-tab>
-				</b-tabs>
+				<b-form-group class="mt-5">
+					<b-form-radio-group
+						required
+						v-model="method"
+						:options="[{text:'微信支付', value:'WECHATPAY'}, {text:'支付宝支付',value:'ALIPAY'}]"
+						buttons
+						button-variant="radio methodselector"
+						size='lg'
+					>
+					</b-form-radio-group>
+				</b-form-group>
+
+				<b-form-group class="mt-3">
+				<b-form-radio-group
+					required
+					id="btn-radios-1"
+					v-model="money"
+					:options="[10, 50, 100, 500, 1000, 5000]"
+					buttons
+					name="radios-btn-default"
+					button-variant="radio"
+					size="lg"
+				>
+					<b-form-radio value="custom">
+						<b-input-group>
+							<b-form-input size="sm" style="max-width:80px" placeholder="其他金额" v-model="amount"></b-form-input>
+							<b-input-group-append>
+							元
+							</b-input-group-append>
+						</b-input-group>
+					</b-form-radio>
+				</b-form-radio-group>
+				</b-form-group>
+				<b-form-group class="mt-5 pt-3">
+					<b-button type="submit" @click="pay" size="lg" variant="primary">提交支付</b-button>
+				</b-form-group>
 			</b-form>
 		</div>
 	</div>
+</div>
 </template>
 
 <script>
+import url from 'url'
+import {post} from "vue-xhr"
+import {serverpath} from '../etc'
+import QRCode from 'qrcode'
+
 export default {
 	name:'Pay',
 	computed:{
@@ -58,12 +84,42 @@ export default {
 			} else {
 				return ['bg-white', 'text-secondary', 'border']
 			}
+		},
+		async pay(e) {
+			e.preventDefault();
+			
+			var method=this.method, money=this.amount, name=this.name;
+			
+			var srv_url=Object.assign({}, serverpath);
+			srv_url.query=null;
+			srv_url.search='';
+			srv_url.pathname=url.resolve(srv_url.pathname, 'createOrder');
+
+			this.longop=true;
+			try {
+				var {data}=await post(url.format(srv_url), {name, money, method});
+				if (data.err) return alert(data.err)
+				await QRCode.toCanvas(document.getElementById('qrcode'), data.to);
+
+				this.longop=false;
+				this.qr_method={
+					'ALIPAY':'支付宝',
+					'WECHATPAY':'微信',
+				}[data.pay_type];
+				this.$bvModal.show('qr');
+			} catch(e) {
+				this.longop=false;
+				alert(e);
+			}
 		}
 	},
 	data() {
 		return {
 			tabIndex:0,
-			amount:null,
+			amount:500,
+			method:'WECHATPAY',
+			longop:false,
+			qr_method:null
 		}
 	}
 }
@@ -75,5 +131,9 @@ export default {
 	}
 	.pt-10px {
 		padding-top: 10px !important;
+	}
+	.methodselector {
+		min-width: 140px;
+		font-size: 16px;
 	}
 </style>

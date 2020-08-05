@@ -8,10 +8,11 @@
     "debugout": "^1.0.0",
     "express": "^4.17.1",
     "gy-easy-mongo": "^0.5.1",
+    "gy-local-ip": "0.0.2",
     "httpf": "0.0.9",
     "md5": "^2.2.1",
+    "node-fetch": "^2.6.0",
     "randomstring": "^1.1.5",
-    "request": "^2.88.2",
     "yargs": "^15.4.1"
   },
   "devDependencies": {

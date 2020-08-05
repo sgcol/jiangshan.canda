@@ -1,9 +1,25 @@
 <template>
-  <div id="game"></div>
+	<div style="width:100%">
+		<b-navbar toggleable="md" type="dark" variant="dark py-1">
+			<b-navbar-brand><span class="text-primary">仙道传说</span> 1服</b-navbar-brand>
+				<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+				<b-collapse id="nav-collapse" is-nav>
+					<b-navbar-nav>
+						<b-nav-item to='/pay' target="_blank"><img src="../assets/chongzhi.png" style="height:22px"></b-nav-item>
+					</b-navbar-nav>
+					<b-navbar-nav class="ml-auto">
+						<b-nav-item href="#" disabled>{{name}}</b-nav-item>
+						<b-nav-item to="/logout" right>退出</b-nav-item>
+					</b-navbar-nav>
+				</b-collapse>
+		</b-navbar>
+		<div id="game"></div>
+	</div>
 </template>
 
 <script>
 // eslint-disable-next-line
+import url from 'url'
 import router from "../router";
 import md5 from "md5";
 import {get} from "vue-xhr"
@@ -36,6 +52,11 @@ window.gopay = ()=>{
 export default {
   name: "Game",
   components: {},
+	computed:{
+		name() {
+			return this.$route.params.name
+		}
+	},
   data() {
     return {};
   },
@@ -121,6 +142,9 @@ export default {
       if (this.$route.params.name) this.launchGame(this.$route.params.name);
       else router.push("/login");
     }, 1000);
+  },
+  beforeDestroy() {
+    // delete flash here
   }
 };
 </script>
@@ -129,7 +153,6 @@ export default {
 <style scoped>
 .game {
   width: 100%;
-  height: 100%;
 }
 </style>
 

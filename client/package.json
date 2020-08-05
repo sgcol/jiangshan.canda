@@ -20,6 +20,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "parse-domain": "^3.0.2",
+    "qrcode": "^1.4.4",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue-router": "^3.3.4",
