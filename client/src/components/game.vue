@@ -51,7 +51,8 @@ window.gopay = ()=>{
 
 function flashHeight() {
   var nodes=document.getElementById('app').childNodes[0];
-  var idealHeight=window.innerHeight-nodes[0].offsetHeight;
+  var idealHeight=window.innerHeight;
+  if (nodes[0]) idealHeight-=nodes[0].offsetHeight;
   if (nodes[1]) nodes[1].setAttribute('height', idealHeight+'px');
   return idealHeight+'px'
 }
