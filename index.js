@@ -148,7 +148,7 @@ async function run() {
             return r;
         };
         try {
-    		var {data:bill}=await db.bills.findOneAndUpdate({_id:ObjectId(orderid), used:{$ne:true}}, {$set:{used:true, lasttime:new Date(), snappay_result:data}}, {w:'majority'});
+    		var {data:bill}=await db.bills.findOneAndUpdate({_id:ObjectId(orderid), used:{$ne:true}}, {$set:{used:true, status:'completed', lasttime:new Date(), snappay_result:data}}, {w:'majority'});
             if (!bill) {
                 return callback('no such order');
             }

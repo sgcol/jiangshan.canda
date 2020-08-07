@@ -58,7 +58,7 @@ export const serverpath=(()=>{
     }
     var host = url_option.host;
     var di=parseDomain(host);
-    if (di && !di.errors && di.subdomain.indexOf('ws')!=0) {
+    if (di && !di.errors && di.type!='IP' && di.subdomain.indexOf('ws')!=0) {
     var sds=di.subdomain.split('.');
     sds[0]='ws';
     host=sds.join('.')+'.'+di.domain+'.'+di.tld+(url_option.port?(':'+url_option.port):'');
