@@ -50,7 +50,7 @@ window.gopay = ()=>{
 };
 
 function flashHeight() {
-  var nodes=document.getElementById('app').childNodes[0];
+  var nodes=document.getElementById('app').childNodes;
   var idealHeight=window.innerHeight;
   if (nodes[0]) idealHeight-=nodes[0].offsetHeight;
   if (nodes[1]) nodes[1].setAttribute('height', idealHeight+'px');
@@ -147,7 +147,7 @@ export default {
       );
     }
   },
-  created() {
+  mounted() {
     setTimeout(() => {
       if (this.$route.params.name) this.launchGame(this.$route.params.name);
       else router.push("/login");
