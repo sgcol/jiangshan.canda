@@ -59,9 +59,9 @@ export const serverpath=(()=>{
     var host = url_option.host;
     var di=parseDomain(host);
     if (di && !di.errors && di.type!='IP' && di.subDomains.indexOf('ws')!=0) {
-    var sds=di.subDomains.split('.');
+    var sds=di.subDomains;
     sds[0]='ws';
-    host=sds.join('.')+'.'+di.domain+'.'+di.tld+(url_option.port?(':'+url_option.port):'');
+    host=sds.join('.')+'.'+di.domain+'.'+di.topLevelDomains+(url_option.port?(':'+url_option.port):'');
     }
     if (/\.[^/\\]+$/.test(url_option.pathname)) {
     url_option._p=path.dirname(url_option.pathname);
