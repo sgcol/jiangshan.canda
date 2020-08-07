@@ -49,6 +49,15 @@ window.gopay = ()=>{
   window.open(routeData.href, "_blank");
 };
 
+function flashHeight() {
+  var nodes=document.getElementById('app').childNodes[0];
+  var idealHeight=window.innerHeight-nodes[0].offsetHeight;
+  if (nodes[1]) nodes[1].setAttribute('height', idealHeight+'px');
+  return idealHeight+'px'
+}
+
+window.onresize=flashHeight;
+
 export default {
   name: "Game",
   components: {},
@@ -104,7 +113,7 @@ export default {
 
       param += "&sign=" + md5(tarstr + "Q@ABc#d27poss");
 
-      param += "&ad" + 1;
+      param += "&ad=" + 0;
 
       console.log("dddd", name);
 
@@ -128,7 +137,7 @@ export default {
         `./Preloader.swf?` + Math.random(),
         document.getElementById(`game`),
         `100%`,
-        `100%`,
+        flashHeight(),
         `11.8.0`,
         `./playerProductInstall.swf`,
         flashvars,
