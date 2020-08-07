@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="w-100 h-100">
 	<b-modal id="qr" hide-footer static>
 		<template v-slot:modal-title>
 			{{qr_method}}扫码
