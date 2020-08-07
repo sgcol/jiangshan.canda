@@ -1,10 +1,10 @@
 <template>
 <div>
-	<b-modal id="qr" hide-footer>
+	<b-modal id="qr" hide-footer static>
 		<template v-slot:modal-title>
 			{{qr_method}}扫码
 		</template>
-		<div id="qrcode"></div>
+		<canvas id="qrcode"></canvas>
 	</b-modal>
 	<div class="w-100 h-100 text-left">
 		<div class="h-100 p-3 m-3 bg-white">
@@ -98,15 +98,16 @@ export default {
 			this.longop=true;
 			try {
 				var {data}=await post(url.format(srv_url), {name, money, method});
+				console.log(data);
 				if (data.err) return alert(data.err)
 				await QRCode.toCanvas(document.getElementById('qrcode'), data.to);
-
 				this.longop=false;
 				this.qr_method={
 					'ALIPAY':'支付宝',
 					'WECHATPAY':'微信',
 				}[data.pay_type];
 				this.$bvModal.show('qr');
+				
 			} catch(e) {
 				this.longop=false;
 				alert(e);
