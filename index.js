@@ -121,7 +121,7 @@ async function run() {
             var data=ret.data[0];
             await db.bills.insertOne({_id:id, name, money, method, time:new Date(), status:'waitforpaying', snappay_data:ret});
             
-            var ret={to:data.h5pay_url};
+            var ret={to:data.qrcode_url};
             ret.pay_type=method;
             callback(null, ret);
         } catch(e) {
