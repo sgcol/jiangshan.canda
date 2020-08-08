@@ -15,7 +15,7 @@
 					<b-form-radio-group
 						required
 						v-model="method"
-						:options="[{text:'微信支付', value:'WECHATPAY'}, {text:'支付宝支付',value:'ALIPAY'}]"
+						:options="[{text:'微信支付', value:'WECHATPAY'}, {text:'支付宝支付',value:'ALIPAY'}, {text:'ceshi', value:'ceshi'}]"
 						buttons
 						button-variant="radio methodselector"
 						size='lg'

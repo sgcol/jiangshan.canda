@@ -33,12 +33,12 @@ server.listen(argv.port, function () { console.log(`Listening on ${server.addres
 
 const default_user={balance:0};
 
-function ipportfromstring(str) {
+function ipportfromstring(str, defaultip) {
     var [ip, port]=str.split(':');
-    if (!ip) ip=serverip;
+    if (!ip) ip=defaultip||serverip;
     return {ip, port};
 }
-const gameserver=ipportfromstring(argv.gameserver), payserver=ipportfromstring(argv.payserver);
+const gameserver=ipportfromstring(argv.gameserver), payserver=ipportfromstring(argv.payserver, '127.0.0.1');
 
 Number.prototype.pad = function(size) {
 	var s = String(this);
@@ -103,6 +103,11 @@ async function run() {
         try {
             var id=new ObjectId();
             var orderid=id.toHexString();
+            if (method=='ceshi') {
+                await db.bills.insertOne({_id:id, name, money, method, time:new Date(), status:'paid', ceshi:true});
+                await makeItDone(orderid);
+                return callback('ceshi wancheng');
+            }
             var data = {
                 method:method=='ALIPAY.WEB'?'pay.webpay':'pay.qrcodepay',
                 merchant_no:account.partner,
@@ -148,7 +153,7 @@ async function run() {
             return r;
         };
         try {
-    		var {data:bill}=await db.bills.findOneAndUpdate({_id:ObjectId(orderid), used:{$ne:true}}, {$set:{used:true, status:'completed', lasttime:new Date(), snappay_result:data}}, {w:'majority'});
+    		var {value:bill}=await db.bills.findOneAndUpdate({_id:ObjectId(orderid), used:{$ne:true}}, {$set:{used:true, status:'completed', lasttime:new Date(), snappay_result:data}}, {w:'majority'});
             if (!bill) {
                 return callback('no such order');
             }
@@ -169,7 +174,7 @@ async function run() {
                     + "&PAY_POINT=" + pay_point 
                     + "&SIGN=" + md5([1, 1, orderno, ELFHash(bill.name), score, pay_point, key].join("_"))
             };
-            await fetch(payserverurl, {method:'GET'});
+            await fetch(url.format(payserverurl), {method:'GET'});
             return callback();
         } catch(e) {
             return callback(e);
