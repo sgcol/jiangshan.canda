@@ -9,6 +9,7 @@
 	<div class="w-100 h-100 text-left">
 		<div class="h-100 p-3 m-3 bg-white">
 			<b-form class="h-100 border p-5">
+				<b-overlay :show="longop" rounded="sm">
 				<p>充值到《仙道传说》 角色名{{name}}</p>
 				<b-form-group class="mt-5">
 					<b-form-radio-group
@@ -46,6 +47,7 @@
 				<b-form-group class="mt-5 pt-3">
 					<b-button type="submit" @click="pay" size="lg" variant="primary">提交支付</b-button>
 				</b-form-group>
+			</b-overlay>
 			</b-form>
 		</div>
 	</div>
@@ -98,8 +100,7 @@ export default {
 			this.longop=true;
 			try {
 				var {data}=await post(url.format(srv_url), {name, money, method});
-				console.log(data);
-				if (data.err) return alert(data.err)
+				if (data.err) throw data.err;
 				await QRCode.toCanvas(document.getElementById('qrcode'), data.to);
 				this.longop=false;
 				this.qr_method={
@@ -107,7 +108,6 @@ export default {
 					'WECHATPAY':'微信',
 				}[data.pay_type];
 				this.$bvModal.show('qr');
-				
 			} catch(e) {
 				this.longop=false;
 				alert(e);
