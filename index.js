@@ -104,7 +104,7 @@ async function run() {
             var id=new ObjectId();
             var orderid=id.toHexString();
             var data = {
-                method:method=='ALIPAY.WEB'?'pay.webpay':'pay.h5pay',
+                method:method=='ALIPAY.WEB'?'pay.webpay':'pay.qrcodepay',
                 merchant_no:account.partner,
                 payment_method:method=='ALIPAY.WEB'?'ALIPAY':method,
                 'out_order_no' : orderid,
