@@ -103,11 +103,11 @@ async function run() {
         try {
             var id=new ObjectId();
             var orderid=id.toHexString();
-            if (method=='ceshi') {
-                await db.bills.insertOne({_id:id, name, money, method, time:new Date(), status:'paid', ceshi:true});
-                await makeItDone(orderid);
-                return callback('ceshi wancheng');
-            }
+            // if (method=='ceshi') {
+            //     await db.bills.insertOne({_id:id, name, money, method, time:new Date(), status:'paid', ceshi:true});
+            //     await makeItDone(orderid);
+            //     return callback('ceshi wancheng');
+            // }
             var data = {
                 method:method=='ALIPAY.WEB'?'pay.webpay':'pay.qrcodepay',
                 merchant_no:account.partner,
