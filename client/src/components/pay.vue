@@ -10,7 +10,7 @@
 		<div class="h-100 p-3 m-3 bg-white">
 			<b-form class="h-100 border p-5">
 				<b-overlay :show="longop" rounded="sm">
-				<p>充值到《仙道传说》 角色名{{name}}</p>
+				<p>充值到《凡劫》 角色名{{name}}</p>
 				<b-form-group class="mt-5">
 					<b-form-radio-group
 						required
