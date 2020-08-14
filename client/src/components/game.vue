@@ -1,7 +1,7 @@
 <template>
 	<div style="width:100%">
 		<b-navbar toggleable="md" type="dark" variant="dark py-1">
-			<b-navbar-brand><span class="text-primary">仙道传说</span> 1服</b-navbar-brand>
+			<b-navbar-brand><span class="text-primary">凡劫</span> 1服</b-navbar-brand>
 				<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 				<b-collapse id="nav-collapse" is-nav>
 					<b-navbar-nav>
