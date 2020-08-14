@@ -13,7 +13,20 @@
 					</b-navbar-nav>
 				</b-collapse>
 		</b-navbar>
-		<div id="game"></div>
+		<div id="game">
+      <p class="mt-5">您的Flash配置不正确</p>
+      <b-carousel
+      :interval="2500"
+      controls
+      indicators
+      img-width="689"
+      img-height="459"
+      style="width:689px; height:459px; margin:auto">
+      <b-carousel-slide><template v-slot:img><img src="../assets/slide1.jpg"></template></b-carousel-slide>
+      <b-carousel-slide><template v-slot:img><img src="../assets/slide2.jpg"></template></b-carousel-slide>
+      <b-carousel-slide><template v-slot:img><img src="../assets/slide3.jpg"></template></b-carousel-slide>
+      </b-carousel>
+    </div>
 	</div>
 </template>
 
@@ -163,6 +176,7 @@ export default {
 <style scoped>
 .game {
   width: 100%;
+  text-align:center;
 }
 </style>
 
