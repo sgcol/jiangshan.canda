@@ -13,7 +13,7 @@
 					</b-navbar-nav>
 				</b-collapse>
 		</b-navbar>
-		<div id="game">
+		<div id="game" class="invisible">
       <p class="mt-5">您的Flash配置不正确</p>
       <b-carousel
       :interval="2500"
@@ -129,7 +129,7 @@ export default {
 
       param += "&ad=" + 0;
 
-      console.log("dddd", name);
+      // console.log("dddd", name);
 
       param += "&home_url=";
       param += "&bbs_url=";
@@ -146,7 +146,10 @@ export default {
         }),
         (attributes = { wmode: "direct" });
 
-      console.log(flashvars);
+      // console.log(flashvars);
+      var ele=document.getElementById('game');
+      ele.classList.remove('invisible');
+      ele.classList.add('visible');
       embedSWF(
         `./Preloader.swf?` + Math.random(),
         document.getElementById(`game`),
