@@ -28,7 +28,7 @@
 					required
 					id="btn-radios-1"
 					v-model="money"
-					:options="[10, 50, 100, 500, 1000, 5000]"
+					:options="pricelist"
 					buttons
 					name="radios-btn-default"
 					button-variant="radio"
@@ -69,7 +69,7 @@ export default {
 		money :{
 			get: function() {
 				if (this.amount==null) return null;
-				if ([10, 50, 100, 500, 1000, 5000].indexOf(this.amount)>=0) return this.amount;
+				if (this.pricelist.indexOf(this.amount)>=0) return this.amount;
 				return 'custom';
 			},
 			set: function(v) {
@@ -115,13 +115,16 @@ export default {
 		}
 	},
 	data() {
-		return {
+		var _d={
 			tabIndex:0,
-			amount:500,
+			// amount:500,
 			method:'WECHATPAY',
 			longop:false,
-			qr_method:null
-		}
+			qr_method:null,
+			pricelist:[5.69, 9.48, 18.96, 37.92, 196.16, 980.86],
+		};
+		_d.amount=_d.pricelist[_d.pricelist.length-1];
+		return _d;
 	}
 }
 </script>
