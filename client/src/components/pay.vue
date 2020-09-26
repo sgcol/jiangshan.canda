@@ -38,7 +38,7 @@
 						<b-input-group>
 							<b-form-input size="sm" style="max-width:80px" placeholder="其他金额" v-model="amount"></b-form-input>
 							<b-input-group-append>
-							CAD
+							元
 							</b-input-group-append>
 						</b-input-group>
 					</b-form-radio>
@@ -121,9 +121,9 @@ export default {
 			method:'WECHATPAY',
 			longop:false,
 			qr_method:null,
-			pricelist:[5.69, 9.48, 18.96, 37.92, 196.16, 980.86],
+			pricelist:[29, 49, 99, 192, 998, 4999],
 		};
-		_d.amount=_d.pricelist[_d.pricelist.length-1];
+		_d.amount=_d.pricelist[0];
 		return _d;
 	}
 }
