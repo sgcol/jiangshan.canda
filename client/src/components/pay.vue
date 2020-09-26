@@ -38,7 +38,7 @@
 						<b-input-group>
 							<b-form-input size="sm" style="max-width:80px" placeholder="其他金额" v-model="amount"></b-form-input>
 							<b-input-group-append>
-							元
+							CAD
 							</b-input-group-append>
 						</b-input-group>
 					</b-form-radio>
