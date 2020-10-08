@@ -39,6 +39,10 @@
 				</b-form-group> 
 			</b-form>
 		</b-card>
+		<b-navbar fixed="bottom" type="dark" variant="primary">
+			<b-navbar-brand>上海光游网络科技有限公司 copyright 2020.
+			</b-navbar-brand>
+		</b-navbar>
 	</div>
 </template>
 
