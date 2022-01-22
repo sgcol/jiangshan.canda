@@ -11,7 +11,7 @@
     "gy-local-ip": "0.0.2",
     "httpf": "0.0.9",
     "md5": "^2.2.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "randomstring": "^1.1.5",
     "yargs": "^15.4.1"
   },
